@@ -98,3 +98,5 @@ function messageFailed(response){
     console.log(response);
     //window.location.reload();
 }
+
+verifyName();
