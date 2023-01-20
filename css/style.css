@@ -30,6 +30,7 @@ main{
     padding-top: 20px;
     font-size: 14px;
     line-height: 20px;
+    overflow: scroll;
 }
 
 li{
