@@ -21,7 +21,7 @@ function showMessages(response) {
         
         if (response.data[i].type == 'status') {
             messages += `
-                <li class="join-left${latest}">
+                <li data-test="message" class="join-left${latest}">
                     <p>
                         <span>${response.data[i].time}</span>  
                         <b class="name">${response.data[i].from}</b>
@@ -33,7 +33,7 @@ function showMessages(response) {
         if (response.data[i].type == 'message') {
             if (response.data[i].to == 'Todos') {
                 messages += `
-                    <li class="public-message${latest}">
+                    <li data-test="message" class="public-message${latest}">
                         <p>
                             <span>${response.data[i].time}</span>  
                             <b class="name">${response.data[i].from}</b> para 
@@ -47,7 +47,7 @@ function showMessages(response) {
         if (response.data[i].type == 'private_message') {
             if (response.data[i].to == user || response.data[i].from == user) {
                 messages += `
-                <li class="private-message${latest}">
+                <li data-test="message" class="private-message${latest}">
                     <p>
                         <span>${response.data[i].time}</span>  
                         <b class="name">${response.data[i].from}</b> para 
@@ -74,7 +74,7 @@ function verifyName() {
     user = prompt('Qual o seu nome?');
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', { name: user });
     promise.then(joinChat);
-    promise.catch();
+    promise.catch(catchName);
 }
 
 function joinChat(response) {
@@ -84,8 +84,8 @@ function joinChat(response) {
 }
 
 function catchName(response) {
-    alert('erro');
-    console.log(response);
+    alert('Nome ja existe ou é invalido')
+    verifyName();
 }
 
 function keepConnected() {
@@ -113,8 +113,7 @@ function messageSuccessful(response) {
 }
 
 function messageFailed(response) {
-    console.log(response);
-    //window.location.reload();
+    window.location.reload();
 }
 
 verifyName();
