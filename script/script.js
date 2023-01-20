@@ -70,7 +70,7 @@ function showMessages(response) {
     
 }
 
-function verifyName() {
+function verifyName(response) {
     user = prompt('Qual o seu nome?');
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', { name: user });
     promise.then(joinChat);
@@ -85,7 +85,9 @@ function joinChat(response) {
 
 function catchName(response) {
     alert('Nome ja existe ou é invalido')
-    verifyName();
+    if(response.request.status == 400){
+        verifyName();
+    }
 }
 
 function keepConnected() {
