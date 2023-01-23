@@ -34,8 +34,7 @@ function showMessages(response) {
                     </li>
                 `;
             }
-            if (response.data[i].type === 'private_message') {
-                if (response.data[i].to === user || response.data[i].from === user) {
+            if (response.data[i].type === 'private_message' && (response.data[i].to === user || response.data[i].from === user)) {
                     messages += `
                 <li data-test="message" class="private-message">
                     <p>
@@ -46,7 +45,6 @@ function showMessages(response) {
                     </p>
                 </li>
                 `;
-                }
             }
         }
         scrollToLatest();
