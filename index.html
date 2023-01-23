@@ -1,10 +1,12 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BatePapo Uol</title>
+    <link rel="shortcut icon" href="https://cdn.icon-icons.com/icons2/699/PNG/512/uol_icon-icons.com_61638.png" />
     <link rel="stylesheet" href="./css/reset.css" .css">
     <link rel="stylesheet" href="./css/style.css" .css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,22 +17,23 @@
 </head>
 
 <body>
-    <header>
-        <img src="./images/logo.png" alt="BatePapo Uol">
-        <ion-icon name="people"></ion-icon>
-    </header>
+    <div class="all-content">
+        <header>
+            <img src="./images/logo.png" alt="BatePapo Uol">
+            <ion-icon name="people"></ion-icon>
+        </header>
 
-    <main>
-        <ul class="messages">
-            
-        </ul>
-    </main>
+        <main>
+            <ul class="messages">
 
-    <footer>
-        <input data-test="input-message" type="text" placeholder="Escreva aqui...">
-        <ion-icon data-test="send-message" onclick="sendMessage()" name="paper-plane"></ion-icon>
-    </footer>
+            </ul>
+        </main>
 
+        <footer>
+            <input data-test="input-message" type="text" placeholder="Escreva aqui...">
+            <ion-icon data-test="send-message" onclick="sendMessage()" name="paper-plane"></ion-icon>
+        </footer>
+    </div>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./script/script.js"></script>
