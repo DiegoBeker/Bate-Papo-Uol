@@ -10,30 +10,21 @@ function loadMessages() {
 }
 
 function showMessages(response) {
-    let latest;
-    
     for (let i = 0; i < response.data.length; i++) {
-        if(i == (response.data.length - 1)){
-            latest = ' latest';
-        }else{
-            latest = '';
-        }
-        
-        if (response.data[i].type == 'status') {
+        if (response.data[i].type === 'status') {
             messages += `
-                <li data-test="message" class="join-left${latest}">
+                <li data-test="message" class="join-left">
                     <p>
                         <span>${response.data[i].time}</span>  
                         <b class="name">${response.data[i].from}</b>
                         ${response.data[i].text}
                     </p>
                  </li>
-            `
-        }
-        if (response.data[i].type == 'message') {
-            if (response.data[i].to == 'Todos') {
+            `;
+        } else {
+            if (response.data[i].to ==='Todos') {
                 messages += `
-                    <li data-test="message" class="public-message${latest}">
+                    <li data-test="message" class="public-message">
                         <p>
                             <span>${response.data[i].time}</span>  
                             <b class="name">${response.data[i].from}</b> para 
@@ -41,13 +32,12 @@ function showMessages(response) {
                             ${response.data[i].text}
                         </p>
                     </li>
-                `
+                `;
             }
-        }
-        if (response.data[i].type == 'private_message') {
-            if (response.data[i].to == user || response.data[i].from == user) {
-                messages += `
-                <li data-test="message" class="private-message${latest}">
+            if (response.data[i].type === 'private_message') {
+                if (response.data[i].to === user || response.data[i].from === user) {
+                    messages += `
+                <li data-test="message" class="private-message">
                     <p>
                         <span>${response.data[i].time}</span>  
                         <b class="name">${response.data[i].from}</b> para 
@@ -55,37 +45,42 @@ function showMessages(response) {
                         ${response.data[i].text}
                     </p>
                 </li>
-                `
+                `;
+                }
             }
         }
+        scrollToLatest();
     }
-    
-    if(list.innerHTML != messages){
+}
+function scrollToLatest() {
+    if (list.innerHTML !== messages) {
         list.innerHTML = messages;
-        const last = document.querySelector('.latest');
-        if(last != null){
-            last.scrollIntoView();
+        const latest = document.querySelector('li:last-child');
+        if (latest != null) {
+            latest.scrollIntoView();
         }
     }
-    
 }
 
-function verifyName(response) {
+function verifyName() {
     user = prompt('Qual o seu nome?');
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', { name: user });
     promise.then(joinChat);
     promise.catch(catchName);
 }
 
-function joinChat(response) {
+function joinChat() {
+    const updateTime = 3000;
+    const keepTime = 5000;
     loadMessages();
-    setInterval(keepConnected, 5000);
-    setInterval(loadMessages, 3000);
+    setInterval(keepConnected, keepTime);
+    setInterval(loadMessages, updateTime);
 }
 
 function catchName(response) {
-    alert('Nome ja existe ou é invalido')
-    if(response.request.status == 400){
+    alert('Nome ja existe ou é invalido');
+    const badRequest = 400;
+    if (response.request.status === badRequest) {
         verifyName();
     }
 }
@@ -98,23 +93,23 @@ function keepConnected() {
 
 function sendMessage() {
     const text = document.querySelector('input');
-    let message = {
+    const message = {
         from: `${user}`,
         to: "Todos",
         text: text.value,
         type: "message"
     };
-    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', message)
+    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', message);
     promise.then(messageSuccessful);
     promise.catch(messageFailed);
 }
 
-function messageSuccessful(response) {
+function messageSuccessful() {
     document.querySelector('input').value = '';
     loadMessages();
 }
 
-function messageFailed(response) {
+function messageFailed() {
     window.location.reload();
 }
 
